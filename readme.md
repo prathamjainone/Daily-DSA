@@ -31,8 +31,3 @@ This repository serves as my personal laboratory for technical interview prepara
 * **Space & Time Complexity:** Every solution includes explicit $O(N)$ time and space analysis.
 * **Progressive Optimizations:** Files showcase the baseline brute-force logic before detailing the optimal approach.
 * **Production-Ready Code:** Solutions prioritize clear variable naming and structured logic over one-line tricks.
-
----
-│       └── group_anagrams.py
-├── Dynamic_Programming/
-└── README.md
