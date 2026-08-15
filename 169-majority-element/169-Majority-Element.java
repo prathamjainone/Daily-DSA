@@ -3,13 +3,23 @@ class Solution {
         //we can either do nested loop
         //optimize it with visited array to make sure every num is calculated once
         //use hashmap
-        HashMap<Integer,Integer>map=new HashMap<>();
-        for(int i:nums){
-            map.put(i,map.getOrDefault(i,0)+1);
+        //use simple loop the logic is n/2 se zyada ek hi hoga elem
+        if(nums.length==0)return -1;
+       int freq=0;
+       int el=0;
+
+       for(int i=0;i<nums.length;i++){
+        if(freq==0){
+            el=nums[i];
+            freq=1;
         }
-        for(Map.Entry<Integer,Integer>entry:map.entrySet()){
-            if(entry.getValue()>nums.length/2)return entry.getKey();
+        else if(el==nums[i]){
+            freq++;
         }
-        return -1;
+        else{
+            freq--;
+        }
+       }
+       return el;
     }
 }
