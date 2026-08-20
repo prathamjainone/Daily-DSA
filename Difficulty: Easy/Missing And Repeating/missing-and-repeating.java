@@ -1,22 +1,42 @@
 class Solution {
     ArrayList<Integer> findTwoElement(int arr[]) {
         // code here
-        //nested loop for 1 to n
-        //hashmap solution
-        HashMap<Integer,Integer>map=new HashMap<>();
+        int xr=0;
         for(int i=0;i<arr.length;i++){
-            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+            xr^=arr[i];
+            xr^=(i+1);
         }
-        ArrayList<Integer>ans=new ArrayList<>();
-        for(int i=1;i<=arr.length;i++){
-            if(!map.containsKey(i)){
-                ans.add(i);
+        int rightmost=xr&~(xr-1);
+        int one=0;
+        int zero=0;
+        for(int i=0;i<arr.length;i++){
+            if((rightmost & arr[i])!=0){
+                one^=arr[i];
             }
             else{
-                if(map.get(i)==2){
-                    ans.add(0,i);
-                }
+                zero^=arr[i];
             }
+        }
+        for(int i=1;i<=arr.length;i++){
+            if((rightmost & i)!=0){
+                one^=i;
+            }
+            else{
+                zero^=i;
+            }
+        }
+        int cnt=0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==zero)cnt++;
+        }
+        ArrayList<Integer>ans=new ArrayList<>();
+        if(cnt!=0){
+            ans.add(zero);
+            ans.add(one);
+        }
+        else{
+            ans.add(one);
+            ans.add(zero);
         }
         return ans;
     }
