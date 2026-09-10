@@ -14,14 +14,41 @@
  * }
  */
 class Solution {
-    public boolean findTarget(TreeNode root, int k) {
-        HashSet<Integer>set=new HashSet<>();
-        return dfs(root,k,set);
+    static class BSTIterator{
+        Stack<TreeNode>st;
+        boolean reverse;
+        public BSTIterator(TreeNode root,boolean reverse){
+            st=new Stack<>();
+            this.reverse=reverse;
+            pushAll(root);
+        }
+        public void pushAll(TreeNode root){
+            while(root!=null){
+                st.push(root);
+                root=(reverse)?root.right:root.left;
+            }
+        }
+        public int next(){
+            TreeNode node=st.pop();
+            if (!reverse) pushAll(node.right);
+            else pushAll(node.left);
+            return node.val;
+        }
     }
-    public boolean dfs(TreeNode root,int k,HashSet<Integer>set){
-        if(root==null)return false;
-        if(set.contains(k-root.val))return true;
-        set.add(root.val);
-        return dfs(root.left,k,set)||dfs(root.right,k,set);
+
+    public boolean findTarget(TreeNode root, int k) {
+
+        BSTIterator l=new BSTIterator(root,false);
+        BSTIterator r=new BSTIterator(root,true);
+
+        int i=l.next();
+        int j=r.next();
+
+        while(i<j){
+            if(i+j==k)return true;
+            else if(i+j<k)i=l.next();
+            else j=r.next();
+        }
+        return false;
     }
 }
