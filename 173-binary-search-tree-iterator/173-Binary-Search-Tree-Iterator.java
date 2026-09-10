@@ -20,12 +20,11 @@ class BSTIterator {
         inorder=new ArrayList<>();
         i=0;
         dfs(inorder,root);
-        Collections.sort(inorder);
     }
     public void dfs(ArrayList<Integer>inorder,TreeNode root){
         if(root==null)return;
-        inorder.add(root.val);
         dfs(inorder,root.left);
+        inorder.add(root.val);
         dfs(inorder,root.right);
     }
     
