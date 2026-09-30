@@ -1,21 +1,32 @@
 class Solution {
     public int rob(int[] money) {
-        int dp[]=new int[money.length];
-        int dp2[]=new int[money.length];
-        Arrays.fill(dp2,-1);
-        Arrays.fill(dp,-1);
         if(money.length==1)return money[0];
-        return Math.max(robb(money,0,money.length-2,dp),robb(money,1,money.length-1,dp2));
+        int arr1[]=new int[money.length-1];
+        int arr2[]=new int[money.length-1];
+
+        for(int i=0;i<money.length;i++){
+            if(i!=money.length-1){
+                arr1[i]=money[i];
+            }
+            if(i!=0){
+                arr2[i-1]=money[i];
+            }
+        }
+        int firstskip=robb(arr2);
+        int lastskip=robb(arr1);
+        return Math.max(firstskip,lastskip);
     }
 
-    public int robb(int[]money,int i,int j,int[]dp){
-        if(i>j)return 0;
-        if(dp[i]!=-1)return dp[i];
-        //take
-        int take=money[i]+robb(money,i+2,j,dp);
-        //skip
-        int skip=robb(money,i+1,j,dp);
+    public int robb(int[]arr){
+        int plus1=0;
+        int plus2=0;
+        int max=0;
+        for(int i=arr.length-1;i>=0;i--){
+            max=Math.max(plus1,arr[i]+plus2);
+            plus2=plus1;
+            plus1=max;
+        }
 
-        return dp[i]=Math.max(take,skip);
+        return max;
     }
 }
